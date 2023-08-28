@@ -1,6 +1,6 @@
+import os
 from datetime import timedelta
 from pathlib import Path
-
 import environ
 
 env = environ.Env()
@@ -37,12 +37,11 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt",
 ]
 
-# LOCAL_APPS = [
-#     "core_apps.users",
-#     "core_apps.authors",
-#     "core_apps.common",
-#     "core_apps.books",
-# ]
+LOCAL_APPS = [
+    "core_apps.users",
+    "core_apps.common",
+    "core_apps.profiles"
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS  # + LOCAL_APPS
 
@@ -83,9 +82,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DATABASES = {"default": env.db("DATABASE_URL")}
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
-
+# DATABASES = {"default": env.db("DATABASE_URL")}
+# DATABASES["default"]["ATOMIC_REQUESTS"] = True
+# TODO: Delete this guy and uncommend above lines
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(ROOT_DIR, 'db.sqlite3'),
+    }
+}
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
@@ -122,17 +127,17 @@ REST_FRAMEWORK = {
 }
 
 
-SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": (
-        "Bearer",
-        "JWT",
-    ),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "SIGNING_KEY": env("SIGNING_KEY"),
-    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-}
+# SIMPLE_JWT = {
+#     "AUTH_HEADER_TYPES": (
+#         "Bearer",
+#         "JWT",
+#     ),
+#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+#     "SIGNING_KEY": env("SIGNING_KEY"),
+#     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+#     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+# }
 
 DJOSER = {
     "LOGIN_FIELD": "email",
@@ -196,16 +201,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_URLS_REGEX = r"^/api/.*$"
 
-AUTH_USER_MODEL = "users.User"
-AUTH_USER_FACTORY = "core_apps.users.factories.UserFactory"
-BANNED_USERS_GROUP_NAME = "BannedUsers"
+# AUTH_USER_MODEL = "users.User"
 
-CELERY_BROKER_URL = env("CELERY_BROKER")
-CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
-CELERY_TIMEZONE = "UTC"
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
+# CELERY_BROKER_URL = env("CELERY_BROKER")
+# CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
+# CELERY_TIMEZONE = "UTC"
+# CELERY_ACCEPT_CONTENT = ["json"]
+# CELERY_TASK_SERIALIZER = "json"
+# CELERY_RESULT_SERIALIZER = "json"
 
 
 LOGGING = {
