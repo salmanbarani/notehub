@@ -7,7 +7,6 @@ User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     gender = serializers.CharField(source="profile.gender")
-    profile_photo = serializers.ReadOnlyField(source="profile.profile_photo")
     first_name = serializers.SerializerMethodField()
     last_name = serializers.SerializerMethodField()
     full_name = serializers.SerializerMethodField()
@@ -22,7 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "full_name",
             "gender",
-            "profile_photo",
         ]
 
     def get_first_name(self, obj):

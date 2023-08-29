@@ -1,4 +1,3 @@
-import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -25,7 +24,6 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.admin",
-
 ]
 
 THIRD_PARTY_APPS = [
@@ -42,7 +40,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "core_apps.users",
     "core_apps.common",
-    "core_apps.profiles"
+    "core_apps.notes",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -51,7 +49,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -86,7 +83,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {"default": env.db("DATABASE_URL")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
-# TODO: Delete this guy and uncommend above lines
 
 
 PASSWORD_HASHERS = [
@@ -148,8 +144,9 @@ DJOSER = {
     "USERNAME_RESET_CONFIRM_URL": "email/reset/confirm/{uid}/{token}",
     "ACTIVATION_URL": "activate/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
+    "USERNAEM_REQUIRED": True,
     "SERIALIZERS": {
-        "user_create": "core_apps.users.serializers.CreateUserSerializer",
+        'user_create': 'djoser.serializers.UserCreateSerializer',
         "user": "core_apps.users.serializers.UserSerializer",
         "current_user": "core_apps.users.serializers.UserSerializer",
         "user_delete": "djoser.serializers.UserDeleteSerializer",
@@ -199,6 +196,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_URLS_REGEX = r"^/api/.*$"
 
 AUTH_USER_MODEL = "users.User"
+AUTH_USER_FACTORY = "core_apps.users.factories.UserFactory"
+BANNED_USERS_GROUP_NAME = "BannedUsers"
 
 CELERY_BROKER_URL = env("CELERY_BROKER")
 CELERY_RESULT_BACKEND = env("CELERY_BACKEND")

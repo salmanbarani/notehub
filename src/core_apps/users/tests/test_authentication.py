@@ -24,4 +24,5 @@ class UserAuthenticationTests(TestCase):
         response = self.client.post(
             JWT_PATH, self.user_data
         )  # only email and password needed
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
