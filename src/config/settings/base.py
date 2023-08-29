@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 from pathlib import Path
+
 import environ
 
 env = environ.Env()
@@ -24,6 +25,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.admin",
+
 ]
 
 THIRD_PARTY_APPS = [
@@ -43,7 +45,7 @@ LOCAL_APPS = [
     "core_apps.profiles"
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS  # + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
@@ -122,17 +124,17 @@ REST_FRAMEWORK = {
 }
 
 
-# SIMPLE_JWT = {
-#     "AUTH_HEADER_TYPES": (
-#         "Bearer",
-#         "JWT",
-#     ),
-#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
-#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-#     "SIGNING_KEY": env("SIGNING_KEY"),
-#     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
-#     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-# }
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": (
+        "Bearer",
+        "JWT",
+    ),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "SIGNING_KEY": env("SIGNING_KEY"),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
 
 DJOSER = {
     "LOGIN_FIELD": "email",
@@ -196,7 +198,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_URLS_REGEX = r"^/api/.*$"
 
-# AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "users.User"
 
 CELERY_BROKER_URL = env("CELERY_BROKER")
 CELERY_RESULT_BACKEND = env("CELERY_BACKEND")
