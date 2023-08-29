@@ -102,5 +102,3 @@ here's some notes and best practices for this assignment.
 
 - I chosed `nginx` to host static files, a better option might be using a scalable blob sotre like `AWS S3` or google cloud service to host your static files.
 - You can make a backup of your DB by typing `docker compose -f local.yml exec postgres backup`. and see your backup history by typing `docker compose -f local.yml exec postgres backups`. I didn't put it in `Makeup` file, because a better approach might be using cloud services like `AWS RDS` or Digitalocean or Google cloud DB services, since they'll handle hosting and maintainance of your DB easily. If you want to host and maintain your DB by your own, you might need to have `cron job` tasks to periodically make a backup of your DB.
-
-* We still have a custom `User` model, but I created a seperate Django app called `authors` because of the scalabily, for now only `authors` can signup and publish their works, but later you might enable users also to signup.
